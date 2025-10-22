@@ -85,8 +85,10 @@ Complete the "Find" homework in Day 2.
     functions: help(), findOne(), and stats(). Past the code for each below.
     For each, write a one-sentence insight that you learned by looking at
     the code.
-       db.collection.help()
-         function () {
+       > db.help()
+       > db.towns.help()
+       >db.collection.help()
+        function () {
   print("DBCollection help");
   print("\tdb.<collection>.find(query, projection)");
   print("\tdb.<collection>.findOne(query, projection)");
@@ -94,24 +96,23 @@ Complete the "Find" homework in Day 2.
   print("\tdb.<collection>.update(query, update, options)");
   print("\tdb.<collection>.remove(query)");
   print("\tdb.<collection>.stats()");
-  // ...prints other available helpers
 }
-Insight: The help() function is a simple JavaScript command that just prints a list of available collection functions.
+
+Insight: The help() function is a simple command that just prints a list of available collection functions.
 It shows that MongoDB commands are easy-to-use helpers made for users in the shell.
 
-  db.collection.findOne()
-    function (query, projection, options) {
+function (query, projection, options) {
   const cursor = this.find(query, projection, -1, 0, 0, options);
   if (!cursor.hasNext()) return null;
   const doc = cursor.next();
   cursor.close();
   return doc;
 }
+
  Insight: The findOne() function works by using the find() command but only returns the first document.
 It helps beginners understand that MongoDB’s shell functions are built on top of one another.
 
-  db.collection.stats()
-    function (scale) {
+function (scale) {
   return this._db.runCommand({ collStats: this.getName(), scale: scale });
 }
 Insight: The stats() function calls the collStats command on the server to get collection details.
