@@ -67,15 +67,52 @@ Hint: Use $gte and $lt operators to specify a date range from January 1, 2024 to
 Complete the "Find" homework in Day 2.
 
 1. Find a shortcut for admin commands. Write the shortcut here.
-
+     > use admin
+     db.adminCommand({.....})
+      db.runCommand("top")
+      db.listCommands()
 
 2. Find the online documentation for queries and cursors. Write the URL here.
-
-
+     Queries : https://www.mongodb.com/docs/manual/tutorial/query-documents/
+     Cursors: https://www.mongodb.com/docs/manual/core/cursors/
+    Cursor Methods: https://www.mongodb.com/docs/manual/reference/method/js-cursor/
 3. Find the MongoDB documentation for mapreduce. Write the URL here.
-
+     https://www.mongodb.com/docs/manual/core/map-reduce/
+     https://www.mongodb.com/docs/manual/reference/method/db.collection.mapReduce/
+     https://www.mongodb.com/docs/manual/reference/command/mapReduce/
 
 4. Through the JavaScript interface, investigate the code for three collections
     functions: help(), findOne(), and stats(). Past the code for each below.
     For each, write a one-sentence insight that you learned by looking at
     the code.
+       db.collection.help()
+         function () {
+  print("DBCollection help");
+  print("\tdb.<collection>.find(query, projection)");
+  print("\tdb.<collection>.findOne(query, projection)");
+  print("\tdb.<collection>.insert(document)");
+  print("\tdb.<collection>.update(query, update, options)");
+  print("\tdb.<collection>.remove(query)");
+  print("\tdb.<collection>.stats()");
+  // ...prints other available helpers
+}
+Insight: The help() function is a simple JavaScript command that just prints a list of available collection functions.
+It shows that MongoDB commands are easy-to-use helpers made for users in the shell.
+
+  db.collection.findOne()
+    function (query, projection, options) {
+  const cursor = this.find(query, projection, -1, 0, 0, options);
+  if (!cursor.hasNext()) return null;
+  const doc = cursor.next();
+  cursor.close();
+  return doc;
+}
+ Insight: The findOne() function works by using the find() command but only returns the first document.
+It helps beginners understand that MongoDB’s shell functions are built on top of one another.
+
+  db.collection.stats()
+    function (scale) {
+  return this._db.runCommand({ collStats: this.getName(), scale: scale });
+}
+Insight: The stats() function calls the collStats command on the server to get collection details.
+It shows that MongoDB shell commands are just shortcuts to real server operations.
